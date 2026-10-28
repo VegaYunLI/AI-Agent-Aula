@@ -6,11 +6,11 @@
 - [x] **1.3.** Estruturar a árvore de diretórios padrão (`src/app`, `src/components`, `src/lib`, `src/types`).
 - [x] **1.4.** Validar a compilação inicial e execução local do servidor de desenvolvimento.
 
-## Grupo 2: Configuração de Banco & ORM (Estrutura Preparatória)
-- **2.1.** Instalar o Prisma ORM e cliente Prisma (`prisma`, `@prisma/client`).
-- **2.2.** Inicializar o schema com datasource apontando para SQLite (`prisma/schema.prisma`).
-- **2.3.** Criar utilitário singleton de conexão do Prisma em `src/lib/prisma.ts`.
-- **2.4.** Executar migração inicial preparatória para garantir o funcionamento do arquivo local SQLite.
+## Grupo 2: Configuração de Banco & ORM (Estrutura Preparatória) (Concluído)
+- [x] **2.1.** Instalar o Prisma ORM e cliente Prisma (`prisma`, `@prisma/client`).
+- [x] **2.2.** Inicializar o schema com datasource apontando para SQLite (`prisma/schema.prisma`).
+- [x] **2.3.** Criar utilitário singleton de conexão do Prisma em `src/lib/prisma.ts`.
+- [x] **2.4.** Executar migração inicial preparatória para garantir o funcionamento do arquivo local SQLite.
 
 ## Grupo 3: Layout Institucional & Responsividade
 - **3.1.** Implementar o componente `Header` com logotipo, links institucionais e navegação acessível.
