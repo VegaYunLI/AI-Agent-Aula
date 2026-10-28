@@ -1,10 +1,10 @@
 # Plano de Implementação - Setup e Layout Base
 
-## Grupo 1: Setup do Projeto & Dependências
-- **1.1.** Inicializar a aplicação Next.js utilizando TypeScript, ESLint e Tailwind CSS via App Router.
-- **1.2.** Configurar a paleta de cores institucional e tipografia no `tailwind.config.ts`.
-- **1.3.** Estruturar a árvore de diretórios padrão (`src/app`, `src/components`, `src/lib`, `src/types`).
-- **1.4.** Validar a compilação inicial e execução local do servidor de desenvolvimento.
+## Grupo 1: Setup do Projeto & Dependências (Concluído)
+- [x] **1.1.** Inicializar a aplicação Next.js utilizando TypeScript, ESLint e Tailwind CSS via App Router.
+- [x] **1.2.** Configurar a paleta de cores institucional e tipografia no `tailwind.config.ts`.
+- [x] **1.3.** Estruturar a árvore de diretórios padrão (`src/app`, `src/components`, `src/lib`, `src/types`).
+- [x] **1.4.** Validar a compilação inicial e execução local do servidor de desenvolvimento.
 
 ## Grupo 2: Configuração de Banco & ORM (Estrutura Preparatória)
 - **2.1.** Instalar o Prisma ORM e cliente Prisma (`prisma`, `@prisma/client`).
