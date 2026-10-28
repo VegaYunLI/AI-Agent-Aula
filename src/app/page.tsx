@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 
 interface CourseSubject {
@@ -13,7 +13,12 @@ interface CourseItem {
   title: string;
   category: "TI" | "Industria" | "Gestao" | "Saude";
   categoryLabel: string;
-  badgeColor: string;
+  badgeTheme: {
+    bg: string;
+    text: string;
+    border: string;
+    dot: string;
+  };
   duration: string;
   period: string;
   workload: string;
@@ -28,7 +33,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Desenvolvimento de Sistemas",
     category: "TI",
     categoryLabel: "Tecnologia & Software",
-    badgeColor: "bg-[#1340E8] text-white",
+    badgeTheme: {
+      bg: "bg-blue-50",
+      text: "text-blue-700",
+      border: "border-blue-200/60",
+      dot: "bg-blue-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.200 horas",
@@ -53,7 +63,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Mecatrônica",
     category: "Industria",
     categoryLabel: "Indústria & Automação",
-    badgeColor: "bg-[#FF5500] text-white",
+    badgeTheme: {
+      bg: "bg-amber-50",
+      text: "text-amber-800",
+      border: "border-amber-200/60",
+      dot: "bg-amber-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.200 horas",
@@ -78,7 +93,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Eletrotécnica",
     category: "Industria",
     categoryLabel: "Engenharia Elétrica",
-    badgeColor: "bg-[#FF5500] text-white",
+    badgeTheme: {
+      bg: "bg-amber-50",
+      text: "text-amber-800",
+      border: "border-amber-200/60",
+      dot: "bg-amber-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.200 horas",
@@ -103,7 +123,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Edificações",
     category: "Industria",
     categoryLabel: "Construção Civil",
-    badgeColor: "bg-[#00A86B] text-white",
+    badgeTheme: {
+      bg: "bg-amber-50",
+      text: "text-amber-800",
+      border: "border-amber-200/60",
+      dot: "bg-amber-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.200 horas",
@@ -128,7 +153,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Farmácia",
     category: "Saude",
     categoryLabel: "Saúde & Farmácia",
-    badgeColor: "bg-[#7C3AED] text-white",
+    badgeTheme: {
+      bg: "bg-emerald-50",
+      text: "text-emerald-800",
+      border: "border-emerald-200/60",
+      dot: "bg-emerald-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.200 horas",
@@ -153,7 +183,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Administração",
     category: "Gestao",
     categoryLabel: "Gestão & Estratégia",
-    badgeColor: "bg-[#0B2559] text-white",
+    badgeTheme: {
+      bg: "bg-sky-50",
+      text: "text-sky-800",
+      border: "border-sky-200/60",
+      dot: "bg-sky-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.000 horas",
@@ -178,7 +213,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Mecânica",
     category: "Industria",
     categoryLabel: "Indústria Mecânica",
-    badgeColor: "bg-[#FF5500] text-white",
+    badgeTheme: {
+      bg: "bg-amber-50",
+      text: "text-amber-800",
+      border: "border-amber-200/60",
+      dot: "bg-amber-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.200 horas",
@@ -203,7 +243,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Química",
     category: "Saude",
     categoryLabel: "Química & Processos",
-    badgeColor: "bg-[#00A86B] text-white",
+    badgeTheme: {
+      bg: "bg-emerald-50",
+      text: "text-emerald-800",
+      border: "border-emerald-200/60",
+      dot: "bg-emerald-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.200 horas",
@@ -228,7 +273,12 @@ const allCourses: CourseItem[] = [
     title: "Técnico em Nutrição e Dietética",
     category: "Saude",
     categoryLabel: "Alimentação & Saúde",
-    badgeColor: "bg-[#7C3AED] text-white",
+    badgeTheme: {
+      bg: "bg-emerald-50",
+      text: "text-emerald-800",
+      border: "border-emerald-200/60",
+      dot: "bg-emerald-600",
+    },
     duration: "3 Semestres (1 ano e meio)",
     period: "Noturno (19h às 23h)",
     workload: "1.200 horas",
@@ -254,8 +304,8 @@ const mockNews = [
   {
     id: "vestibulinho-2026",
     tag: "PROCESSO SELETIVO",
-    tagBg: "bg-[#FF5500] text-white",
-    date: "26 OUTUBRO 2026",
+    badgeStyle: "bg-blue-50 text-blue-700 border border-blue-200/60",
+    date: "26 de Outubro de 2026",
     title: "Publicado o Edital Oficial do Vestibulinho 2026 com 360 Vagas Gratuitas",
     summary:
       "A Direção da Sitech divulgou as diretrizes completas para o exame classificatório do primeiro semestre letivo de 2026. Provas presenciais e isenção de taxa disponíveis.",
@@ -264,8 +314,8 @@ const mockNews = [
   {
     id: "lab-robotica",
     tag: "INFRAESTRUTURA",
-    tagBg: "bg-[#1340E8] text-white",
-    date: "21 OUTUBRO 2026",
+    badgeStyle: "bg-amber-50 text-amber-800 border border-amber-200/60",
+    date: "21 de Outubro de 2026",
     title: "Parceria com Polo Fabril viabiliza novos 12 Kits Didáticos de Robótica e CLP",
     summary:
       "Estudantes de Mecatrônica e Eletrotécnica já contam com bancadas renovadas para montagem de comandos pneumáticos e esteiras industriais automatizadas.",
@@ -274,8 +324,8 @@ const mockNews = [
   {
     id: "premio-inovacao",
     tag: "CONQUISTA ACADÊMICA",
-    tagBg: "bg-[#00A86B] text-white",
-    date: "15 OUTUBRO 2026",
+    badgeStyle: "bg-emerald-50 text-emerald-800 border border-emerald-200/60",
+    date: "15 de Outubro de 2026",
     title: "Projeto de Software de Alunos de Desenvolvimento vence Desafio Tecnológico",
     summary:
       "O aplicativo desenvolvido para gestão logística do comércio local foi laureado em feira estadual; os alunos foram convidados para incubação acelerada.",
@@ -285,170 +335,167 @@ const mockNews = [
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("TODOS");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCourseModal, setSelectedCourseModal] = useState<CourseItem | null>(null);
 
-  const filteredCourses =
-    selectedCategory === "TODOS"
-      ? allCourses
-      : allCourses.filter((c) => c.category === selectedCategory);
+  const filteredCourses = useMemo(() => {
+    return allCourses.filter((course) => {
+      const matchesCategory =
+        selectedCategory === "TODOS" || course.category === selectedCategory;
+      const matchesQuery =
+        searchQuery.trim() === "" ||
+        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.highlights.some((h) => h.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        course.summary.toLowerCase().includes(searchQuery.toLowerCase());
+
+      return matchesCategory && matchesQuery;
+    });
+  }, [selectedCategory, searchQuery]);
 
   return (
-    <div className="flex flex-col w-full bg-[#f4f5f8] text-[#0f172a]">
+    <div className="flex flex-col w-full bg-slate-50 text-slate-900">
       {/* ============================================================ */}
-      {/* 1. HERO INSTITUCIONAL (AUTÊNTICO, VIBRANTE, SEM GRADIENTE IA) */}
+      {/* 1. HERO INSTITUCIONAL: ESTÚDIO TÉCNICO CONTEMPORÂNEO          */}
       {/* ============================================================ */}
-      <section className="relative w-full bg-[#0b2559] text-white border-b-4 border-[#ff5500] pt-6 pb-16 lg:pb-24">
+      <section className="relative w-full pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden border-b border-slate-200/80 bg-white">
+        {/* Fundo decorativo sutil */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-slate-100/80 rounded-full blur-3xl pointer-events-none -z-10" />
+
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Top Bar da Hero: Logo & Status do Campus */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-8 mb-10 border-b border-slate-700/60">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 bg-[#ff5500] flex items-center justify-center font-black text-white text-lg shadow-neo-sm">
-                S
-              </div>
-              <div>
-                <span className="text-xl font-black tracking-tight text-white block">SITECH</span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-sky-300">
-                  Escola Técnica Estadual de Excelência
-                </span>
-              </div>
-            </div>
-
-            {/* Badge dinâmico de status */}
-            <div className="flex items-center gap-2.5 bg-[#07193b] px-3.5 py-1.5 border border-slate-700 text-xs font-mono">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-              <span className="font-semibold text-emerald-300">CAMPUS ATIVO</span>
-              <span className="text-slate-500">|</span>
-              <span className="text-slate-300 font-bold">VESTIBULINHO 2026 ABERTO</span>
-            </div>
-          </div>
-
-          {/* Grid Principal da Hero */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Lado Esquerdo: Mensagem Forte e Ações */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            {/* Lado Esquerdo: Mensagem Principal */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-block bg-[#ffe600] text-slate-950 font-black px-3 py-1 text-xs uppercase tracking-wider shadow-neo-sm">
-                ESTRUTURA BASEADA NA ETEC SALES GOMES
+              {/* Badge de Status do Campus */}
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-xs font-medium text-emerald-800 shadow-xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>Campus Ativo • Vestibulinho 2026 com Inscrições Abertas</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none text-white">
-                FORMAÇÃO TÉCNICA <br />
-                <span className="inline-block bg-[#ff5500] text-white px-2 py-0.5 mt-2 shadow-neo-sm">
-                  100% GRATUITA.
-                </span>{" "}
-                <br />
-                PRONTA PRO MERCADO.
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
+                O seu futuro profissional começa na prática.
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-200 leading-relaxed max-w-2xl font-medium">
-                Cursos técnicos noturnos presenciais de alta densidade prática. Laboratórios industriais reais de 
-                robótica, computação e química, sem mensalidades e com diploma oficial de valor nacional.
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal">
+                Cursos técnicos gratuitos de alta empregabilidade com aulas no período noturno. 
+                Matrizes curriculares estruturadas e laboratórios industriais de ponta para preparar você para as demandas reais do mercado.
               </p>
 
-              {/* Botões de Ação com Estilo Neo-Técnico */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+              {/* Botões de Ação */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <a
                   href="#cursos"
-                  className="inline-flex items-center justify-center gap-2 bg-[#ff5500] hover:bg-[#e04a00] text-white px-7 py-4 text-sm font-black uppercase tracking-wider shadow-neo hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3.5 text-sm font-semibold rounded-xl shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <span>Explorar 9 Cursos Técnicos</span>
-                  <span className="text-lg">↓</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
                 </a>
 
                 <a
                   href="#noticias"
-                  className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 text-[#0b2559] px-6 py-4 text-sm font-bold uppercase tracking-wider shadow-neo hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 px-6 py-3.5 text-sm font-semibold rounded-xl transition-all duration-200"
                 >
                   <span>Comunicados Oficiais</span>
                 </a>
               </div>
 
-              {/* Placas de Estatísticas Sólidas */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-700/60">
-                <div className="bg-[#07193b] p-3 border border-slate-700">
-                  <div className="text-2xl font-black text-[#ffe600]">9</div>
-                  <div className="text-[11px] font-bold text-slate-300 uppercase">Cursos Técnicos</div>
+              {/* Métricas e Fatos Institucionais */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-200">
+                <div className="space-y-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">9</div>
+                  <div className="text-xs font-medium text-slate-500">Cursos Técnicos</div>
                 </div>
-                <div className="bg-[#07193b] p-3 border border-slate-700">
-                  <div className="text-2xl font-black text-white">R$ 0</div>
-                  <div className="text-[11px] font-bold text-slate-300 uppercase">Mensalidade</div>
+                <div className="space-y-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-blue-600">R$ 0</div>
+                  <div className="text-xs font-medium text-slate-500">100% Gratuito</div>
                 </div>
-                <div className="bg-[#07193b] p-3 border border-slate-700">
-                  <div className="text-2xl font-black text-emerald-400">1.200h</div>
-                  <div className="text-[11px] font-bold text-slate-300 uppercase">Carga Horária</div>
+                <div className="space-y-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">1.200h</div>
+                  <div className="text-xs font-medium text-slate-500">Carga Horária</div>
                 </div>
-                <div className="bg-[#07193b] p-3 border border-slate-700">
-                  <div className="text-2xl font-black text-[#ff5500]">88%</div>
-                  <div className="text-[11px] font-bold text-slate-300 uppercase">Empregabilidade</div>
+                <div className="space-y-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600">88%</div>
+                  <div className="text-xs font-medium text-slate-500">Empregabilidade</div>
                 </div>
               </div>
             </div>
 
-            {/* Lado Direito: Terminal Interativo de Destaques Técnicos */}
+            {/* Lado Direito: Card Interativo em Destaque */}
             <div className="lg:col-span-5">
-              <div className="bg-[#07193b] border-2 border-slate-600 shadow-neo-lg text-white overflow-hidden">
-                {/* Header do Terminal */}
-                <div className="bg-[#0f172a] px-4 py-2.5 flex items-center justify-between border-b border-slate-700">
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-3 w-3 bg-[#ff5500] inline-block"></span>
-                    <span className="h-3 w-3 bg-[#ffe600] inline-block"></span>
-                    <span className="h-3 w-3 bg-[#00a86b] inline-block"></span>
-                    <span className="ml-2 text-xs font-mono font-bold text-slate-400">
-                      sitech-lab-matrix.sh
+              <div className="rounded-2xl bg-white border border-slate-200/90 shadow-card p-6 sm:p-7 relative transition-all duration-300 hover:shadow-card-hover">
+                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-2.5 w-2.5 rounded-full bg-blue-600"></span>
+                    <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                      Destaque de Formação
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono text-sky-300 bg-blue-950 px-2 py-0.5 font-bold">
-                    ENSINO PÚBLICO
+                  <span className="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium">
+                    Noturno
                   </span>
                 </div>
 
-                {/* Conteúdo do Card Técnico */}
-                <div className="p-5 space-y-4">
-                  <div className="space-y-1">
-                    <div className="text-[11px] font-mono text-[#ffe600]">
-                      &gt; DESTAQUE EM ALTA DEMANDA INDUSTRIAL
-                    </div>
-                    <div className="text-xl font-black text-white">
-                      Técnico em Desenvolvimento de Sistemas
-                    </div>
-                    <div className="text-xs text-slate-300 font-mono">
-                      Período Noturno • Duração: 3 semestres • 1.200h
-                    </div>
-                  </div>
+                <div className="mt-5 space-y-3">
+                  <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+                    Técnico em Desenvolvimento de Sistemas
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Aprenda lógica, banco de dados relacional, APIs em Node.js, interfaces com React e TypeScript e projetos de software completos.
+                  </p>
+                </div>
 
-                  <div className="bg-[#0b2559] p-3 border border-slate-700 space-y-2">
-                    <div className="text-xs font-bold text-sky-300 uppercase tracking-wider">
-                      Matérias de Destaque da Grade:
+                {/* Prévia da Matriz Curricular */}
+                <div className="mt-5 rounded-xl bg-slate-50 p-4 border border-slate-100 space-y-2.5">
+                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                    Matérias Principais da Grade:
+                  </span>
+                  <div className="grid grid-cols-2 gap-2 text-xs text-slate-700">
+                    <div className="flex items-center gap-1.5">
+                      <svg className="w-3.5 h-3.5 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Desenvolvimento Web</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-2 text-xs font-mono text-slate-200">
-                      <div className="flex items-center gap-1">
-                        <span className="text-[#ff5500]">▸</span> Programação Web
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[#ff5500]">▸</span> Banco de Dados SQL
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[#ff5500]">▸</span> Apps Mobile
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-[#ff5500]">▸</span> Segurança & Nuvem
-                      </div>
+                    <div className="flex items-center gap-1.5">
+                      <svg className="w-3.5 h-3.5 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Bancos de Dados SQL</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <svg className="w-3.5 h-3.5 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Engenharia de Software</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <svg className="w-3.5 h-3.5 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Dispositivos Móveis</span>
                     </div>
                   </div>
+                </div>
 
-                  <div className="flex items-center justify-between pt-2">
-                    <div className="text-xs text-slate-400 font-mono">
-                      Sem taxa de matrícula
-                    </div>
-                    <a
-                      href="#cursos"
-                      className="bg-[#ffe600] text-slate-950 font-black px-3.5 py-1.5 text-xs uppercase tracking-wider hover:bg-yellow-300 transition-colors"
-                    >
-                      Ver Matriz Completa
-                    </a>
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div className="text-xs text-slate-500">
+                    1.200h • 3 Semestres
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCourseModal(allCourses[0])}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+                  >
+                    <span>Ver Matriz do Curso</span>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
@@ -457,122 +504,172 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 2. TICKER MARQUEE ANIMADO (VIBRANTE, CONTINUO, ALERTA 2026) */}
+      {/* 2. TICKER MARQUEE: INFORMAÇÕES CONTÍNUAS E ELEGANTES          */}
       {/* ============================================================ */}
-      <div className="w-full bg-[#ffe600] text-slate-950 border-b-2 border-slate-950 overflow-hidden py-2.5 font-mono font-black text-xs sm:text-sm tracking-wider select-none">
-        <div className="animate-ticker">
-          <span className="px-6 flex items-center gap-2">
-            ⚡ VESTIBULINHO SITECH 2026: INSCRIÇÕES ABERTAS
+      <div className="w-full bg-slate-900 text-slate-300 py-3 overflow-hidden select-none border-b border-slate-800">
+        <div className="animate-ticker text-xs sm:text-sm font-medium">
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-400"></span>
+            Vestibulinho Sitech 2026: Inscrições Abertas para o 1º Semestre
           </span>
-          <span className="px-6 flex items-center gap-2">
-            ★ CURSOS TÉCNICOS 100% GRATUITOS
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+            Cursos Técnicos Públicos 100% Gratuitos sem Mensalidades
           </span>
-          <span className="px-6 flex items-center gap-2">
-            ⚙️ 9 OPÇÕES PRESENCIAIS NO PERÍODO NOTURNO
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
+            9 Opções Formativas com Aulas Práticas no Período Noturno
           </span>
-          <span className="px-6 flex items-center gap-2">
-            🏢 MATRIZES CURRICULARES INSPIRADAS NA ETEC SALES GOMES
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-400"></span>
+            Matrizes Curriculares Inspiradas na ETEC Sales Gomes
           </span>
-          <span className="px-6 flex items-center gap-2">
-            ⚡ LABORATÓRIOS INDUSTRIAIS COM TECNOLOGIA DE PONTA
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+            Laboratórios Especializados com Equipamentos Industriais Reais
           </span>
-          <span className="px-6 flex items-center gap-2">
-            ★ DIPLOMA TÉCNICO OFICIAL RECONHECIDO NACIONALMENTE
+          {/* Duplicação para loop contínuo sem solavancos */}
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-400"></span>
+            Vestibulinho Sitech 2026: Inscrições Abertas para o 1º Semestre
           </span>
-          {/* Repetição para loop contínuo perfeito */}
-          <span className="px-6 flex items-center gap-2">
-            ⚡ VESTIBULINHO SITECH 2026: INSCRIÇÕES ABERTAS
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+            Cursos Técnicos Públicos 100% Gratuitos sem Mensalidades
           </span>
-          <span className="px-6 flex items-center gap-2">
-            ★ CURSOS TÉCNICOS 100% GRATUITOS
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
+            9 Opções Formativas com Aulas Práticas no Período Noturno
           </span>
-          <span className="px-6 flex items-center gap-2">
-            ⚙️ 9 OPÇÕES PRESENCIAIS NO PERÍODO NOTURNO
-          </span>
-          <span className="px-6 flex items-center gap-2">
-            🏢 MATRIZES CURRICULARES INSPIRADAS NA ETEC SALES GOMES
+          <span className="px-6 inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-400"></span>
+            Matrizes Curriculares Inspiradas na ETEC Sales Gomes
           </span>
         </div>
       </div>
 
       {/* ============================================================ */}
-      {/* 3. CATÁLOGO COMPLETO DE CURSOS TÉCNICOS (#cursos) */}
+      {/* 3. CATÁLOGO COMPLETO DE CURSOS TÉCNICOS (#cursos)            */}
       {/* ============================================================ */}
-      <section id="cursos" className="py-16 sm:py-24 bg-[#f4f5f8] border-b-2 border-slate-300 scroll-mt-20">
+      <section id="cursos" className="py-20 sm:py-28 bg-slate-50 scroll-mt-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
-              <span className="inline-block bg-[#0b2559] text-white px-2.5 py-1 text-xs font-black uppercase tracking-wider mb-2">
-                Catálogo Oficial 2026
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-                CURSOS TÉCNICOS PRESENCIAIS
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+                Cursos Técnicos Presenciais
               </h2>
-              <p className="text-slate-600 mt-1 max-w-2xl font-medium">
-                Conheça a grade curricular completa dos 9 cursos técnicos inspirados na ETEC Sales Gomes.
-                Clique em qualquer curso para visualizar a matriz de matérias semestre por semestre.
+              <p className="text-slate-600 mt-2 max-w-2xl font-normal leading-relaxed text-sm sm:text-base">
+                Explore a grade curricular detalhada dos 9 cursos técnicos noturnos. Clique em qualquer curso para examinar a lista de matérias semestre por semestre.
               </p>
             </div>
 
-            {/* Filtros por Categoria com Botões Neo-Técnicos */}
-            <div className="flex flex-wrap gap-1.5">
-              {[
-                { id: "TODOS", label: "Todos (9)" },
-                { id: "TI", label: "Tecnologia" },
-                { id: "Industria", label: "Indústria & Automação" },
-                { id: "Gestao", label: "Gestão" },
-                { id: "Saude", label: "Saúde & Farmácia" },
-              ].map((cat) => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3 py-1.5 text-xs font-black uppercase tracking-wider transition-all ${
-                    selectedCategory === cat.id
-                      ? "bg-[#ff5500] text-white shadow-neo-sm translate-x-[-1px] translate-y-[-1px]"
-                      : "bg-white text-slate-700 border border-slate-300 hover:border-slate-800"
-                  }`}
+            {/* Barra de Busca Rápida */}
+            <div className="w-full md:w-72">
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Buscar curso ou matéria..."
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-600 shadow-2xs"
+                />
+                <svg
+                  className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  {cat.label}
-                </button>
-              ))}
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
             </div>
           </div>
+
+          {/* Filtros por Categoria com Pills Elegantes */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {[
+              { id: "TODOS", label: "Todos os Cursos", count: allCourses.length },
+              { id: "TI", label: "Tecnologia & Software", count: 1 },
+              { id: "Industria", label: "Indústria & Automação", count: 3 },
+              { id: "Saude", label: "Saúde & Farmácia", count: 3 },
+              { id: "Gestao", label: "Gestão & Estratégia", count: 2 },
+            ].map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
+                  selectedCategory === cat.id
+                    ? "bg-slate-900 text-white shadow-xs"
+                    : "bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-100 hover:text-slate-900"
+                }`}
+              >
+                <span>{cat.label}</span>
+                <span
+                  className={`text-xs px-1.5 py-0.5 rounded-full ${
+                    selectedCategory === cat.id ? "bg-slate-700 text-slate-200" : "bg-slate-100 text-slate-500"
+                  }`}
+                >
+                  {cat.count}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Mensagem quando nenhum curso corresponde à busca */}
+          {filteredCourses.length === 0 && (
+            <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8 space-y-3">
+              <p className="text-base font-semibold text-slate-800">
+                Nenhum curso encontrado para a busca &quot;{searchQuery}&quot;.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedCategory("TODOS");
+                }}
+                className="text-xs text-blue-600 font-semibold hover:underline"
+              >
+                Limpar filtros e exibir todos os cursos
+              </button>
+            </div>
+          )}
 
           {/* Grid dos Cards de Cursos */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCourses.map((course) => (
               <div
                 key={course.id}
-                className="flex flex-col justify-between bg-white border-2 border-[#0b2559] p-6 shadow-neo hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-neo-lg transition-all group"
+                className="group flex flex-col justify-between bg-white rounded-2xl border border-slate-200/90 p-6 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300"
               >
                 <div>
-                  {/* Tag superior de categoria e carga horária */}
+                  {/* Categoria e Carga Horária */}
                   <div className="flex items-center justify-between gap-2 mb-3">
                     <span
-                      className={`text-[11px] font-black uppercase px-2 py-0.5 ${course.badgeColor}`}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${course.badgeTheme.bg} ${course.badgeTheme.text} border ${course.badgeTheme.border}`}
                     >
+                      <span className={`h-1.5 w-1.5 rounded-full ${course.badgeTheme.dot}`}></span>
                       {course.categoryLabel}
                     </span>
-                    <span className="font-mono text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5">
+                    <span className="text-xs font-medium text-slate-500">
                       {course.workload}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-black text-slate-900 group-hover:text-[#1340e8] transition-colors leading-tight">
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
                     {course.title}
                   </h3>
 
-                  <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                     {course.summary}
                   </p>
 
-                  {/* Highlights técnicos */}
-                  <div className="mt-4 flex flex-wrap gap-1">
+                  {/* Highlights de Competências */}
+                  <div className="mt-4 flex flex-wrap gap-1.5">
                     {course.highlights.map((h) => (
                       <span
                         key={h}
-                        className="bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 uppercase"
+                        className="bg-slate-50 text-slate-600 border border-slate-200/60 text-xs px-2.5 py-0.5 rounded-lg"
                       >
                         {h}
                       </span>
@@ -580,19 +677,21 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t-2 border-slate-100 space-y-3">
-                  <div className="flex items-center justify-between text-xs font-bold text-slate-600 font-mono">
+                <div className="mt-6 pt-4 border-t border-slate-100 space-y-3">
+                  <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
                     <span>{course.duration}</span>
-                    <span className="text-[#0b2559]">{course.period}</span>
+                    <span className="text-slate-700 font-semibold">{course.period}</span>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => setSelectedCourseModal(course)}
-                    className="w-full py-2.5 bg-[#0b2559] hover:bg-[#1340e8] text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-neo-sm"
+                    className="w-full py-2.5 bg-slate-900 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-200 shadow-2xs hover:shadow-xs"
                   >
-                    <span>Ver Matriz Curricular & Matérias</span>
-                    <span className="text-sm">→</span>
+                    <span>Ver Matriz Curricular</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -602,67 +701,78 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 4. MODAL / GAVETA DE MATRIZ CURRICULAR DO CURSO SELECIONADO */}
+      {/* 4. MODAL DE MATRIZ CURRICULAR                                 */}
       {/* ============================================================ */}
       {selectedCourseModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xs">
-          <div className="relative w-full max-w-2xl bg-white border-4 border-[#0b2559] shadow-neo-lg max-h-[90vh] flex flex-col">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="relative w-full max-w-2xl bg-white rounded-2xl border border-slate-200 shadow-elevated max-h-[90vh] flex flex-col overflow-hidden animate-fade-in">
             {/* Header do Modal */}
-            <div className="bg-[#0b2559] text-white p-5 flex items-start justify-between border-b-2 border-[#ff5500]">
-              <div>
-                <span className="bg-[#ffe600] text-slate-950 font-black text-[10px] uppercase px-2 py-0.5">
-                  {selectedCourseModal.categoryLabel} • {selectedCourseModal.workload}
+            <div className="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-50/60">
+              <div className="space-y-1">
+                <span
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${selectedCourseModal.badgeTheme.bg} ${selectedCourseModal.badgeTheme.text} border ${selectedCourseModal.badgeTheme.border}`}
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${selectedCourseModal.badgeTheme.dot}`}></span>
+                  {selectedCourseModal.categoryLabel}
                 </span>
-                <h3 className="text-xl sm:text-2xl font-black mt-1 leading-snug">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">
                   {selectedCourseModal.title}
                 </h3>
-                <p className="text-xs text-sky-200 mt-1 font-mono">
-                  {selectedCourseModal.duration} | {selectedCourseModal.period}
+                <p className="text-xs text-slate-500">
+                  {selectedCourseModal.duration} • {selectedCourseModal.period} • {selectedCourseModal.workload}
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={() => setSelectedCourseModal(null)}
-                className="bg-[#ff5500] hover:bg-[#e04a00] text-white h-8 w-8 flex items-center justify-center font-black text-sm transition-colors"
+                className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-600"
                 aria-label="Fechar matriz"
               >
-                ✕
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 
-            {/* Corpo do Modal com a Matriz Semestre a Semestre */}
-            <div className="p-6 overflow-y-auto space-y-5 text-slate-900">
-              <p className="text-xs text-slate-600 font-medium">
+            {/* Conteúdo com a Matriz Semestre por Semestre */}
+            <div className="p-6 overflow-y-auto space-y-5 text-slate-800">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 {selectedCourseModal.summary}
               </p>
 
               <div className="space-y-4">
-                <h4 className="text-sm font-black uppercase tracking-wider text-[#0b2559] border-b-2 border-slate-200 pb-1">
-                  Disciplinas da Matriz Curricular (Por Semestre):
-                </h4>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-700 block">
+                  Disciplinas da Matriz Curricular (Por Semestre)
+                </span>
 
                 {[1, 2, 3].map((sem) => {
                   const subs = selectedCourseModal.subjects.filter((s) => s.semester === sem);
                   if (subs.length === 0) return null;
                   return (
-                    <div key={sem} className="bg-slate-50 border border-slate-300 p-3.5 space-y-2">
+                    <div key={sem} className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-4 space-y-2.5">
                       <div className="flex items-center justify-between">
-                        <span className="font-black text-xs uppercase text-[#ff5500]">
+                        <span className="font-bold text-xs uppercase tracking-wider text-blue-700">
                           {sem}º Semestre Letivo
                         </span>
-                        <span className="text-[10px] font-mono text-slate-500 font-bold">
+                        <span className="text-xs text-slate-500">
                           {subs.length} matérias
                         </span>
                       </div>
-                      <ul className="space-y-1">
+                      <ul className="space-y-1.5">
                         {subs.map((s, idx) => (
                           <li
                             key={idx}
-                            className="flex items-center gap-2 text-xs font-mono text-slate-800"
+                            className="flex items-center gap-2 text-xs sm:text-sm text-slate-700"
                           >
-                            <span className="text-slate-400">▪</span>
-                            <span className="font-semibold">{s.name}</span>
+                            <svg className="w-3.5 h-3.5 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+                            </svg>
+                            <span>{s.name}</span>
                           </li>
                         ))}
                       </ul>
@@ -671,17 +781,17 @@ export default function HomePage() {
                 })}
               </div>
 
-              <div className="bg-amber-50 border border-amber-300 p-3 text-xs text-amber-900 font-medium">
-                <strong>Observação de Matrícula:</strong> Aulas práticas ministradas em laboratórios especializados. Não há cobrança de taxas de laboratório ou material didático.
+              <div className="rounded-xl bg-blue-50/80 border border-blue-200/70 p-3.5 text-xs text-blue-900 leading-relaxed">
+                <strong>Observação de Matrícula:</strong> Aulas práticas ministradas em laboratórios com equipamentos industriais e softwares licenciados. Não há cobrança de taxas de laboratório ou material didático.
               </div>
             </div>
 
             {/* Rodapé do Modal */}
-            <div className="bg-slate-100 p-4 border-t border-slate-200 flex justify-end gap-3">
+            <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setSelectedCourseModal(null)}
-                className="px-5 py-2 bg-[#0b2559] text-white text-xs font-black uppercase tracking-wider hover:bg-[#1340e8]"
+                className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-colors"
               >
                 Fechar Matriz
               </button>
@@ -691,56 +801,59 @@ export default function HomePage() {
       )}
 
       {/* ============================================================ */}
-      {/* 5. DIFERENCIAIS DA ESCOLA TÉCNICA (#diferenciais) */}
+      {/* 5. DIFERENCIAIS DA FORMAÇÃO (#diferenciais)                   */}
       {/* ============================================================ */}
-      <section id="diferenciais" className="py-16 sm:py-24 bg-white border-b-2 border-slate-300 scroll-mt-20">
+      <section id="diferenciais" className="py-20 sm:py-28 bg-white border-y border-slate-200/80 scroll-mt-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="bg-[#ff5500] text-white px-3 py-1 text-xs font-black uppercase tracking-wider">
-              Pilares da Nossa Formação
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mt-3">
-              POR QUE A SITECH É REFERÊNCIA REGIONAL?
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+              Por que a Sitech é referência regional
             </h2>
-            <p className="text-slate-600 mt-2 font-medium">
-              Ambiente de aprendizado projetado para replicar as condições do mercado de trabalho e indústrias modernas.
+            <p className="text-slate-600 mt-2 text-sm sm:text-base leading-relaxed">
+              Um ambiente de aprendizado técnico desenhado para replicar com fidelidade as condições dos setores produtivos mais dinâmicos.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[#f4f5f8] border-2 border-[#0b2559] p-6 shadow-neo">
-              <div className="h-12 w-12 bg-[#1340e8] text-white font-black text-xl flex items-center justify-center mb-4 shadow-neo-sm">
-                01
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="rounded-2xl border border-slate-200/90 p-8 shadow-card hover:shadow-card-hover transition-all duration-300 space-y-4">
+              <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                </svg>
               </div>
-              <h3 className="text-lg font-black text-slate-900 uppercase">
-                Laboratórios Especializados
+              <h3 className="text-lg font-bold text-slate-900">
+                Laboratórios de Alta Densidade Prática
               </h3>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                Workstations configuradas, bancadas de soldagem, tornos CNC, impressoras 3D e braços robóticos industriais para práticas diárias.
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Workstations configuradas, bancadas de soldagem, tornos CNC, impressoras 3D e manipuladores robóticos industriais para práticas semanais.
               </p>
             </div>
 
-            <div className="bg-[#f4f5f8] border-2 border-[#0b2559] p-6 shadow-neo">
-              <div className="h-12 w-12 bg-[#ff5500] text-white font-black text-xl flex items-center justify-center mb-4 shadow-neo-sm">
-                02
+            <div className="rounded-2xl border border-slate-200/90 p-8 shadow-card hover:shadow-card-hover transition-all duration-300 space-y-4">
+              <div className="h-12 w-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
               </div>
-              <h3 className="text-lg font-black text-slate-900 uppercase">
-                Professores do Mercado
+              <h3 className="text-lg font-bold text-slate-900">
+                Docentes com Atuação no Mercado
               </h3>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                Corpo docente composto por engenheiros, químicos, farmacêuticos e desenvolvedores atuantes nos principais polos de tecnologia e indústria.
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Corpo docente formado por engenheiros, desenvolvedores, farmacêuticos e gestores atuantes nos principais polos de tecnologia e indústria.
               </p>
             </div>
 
-            <div className="bg-[#f4f5f8] border-2 border-[#0b2559] p-6 shadow-neo">
-              <div className="h-12 w-12 bg-[#00a86b] text-white font-black text-xl flex items-center justify-center mb-4 shadow-neo-sm">
-                03
+            <div className="rounded-2xl border border-slate-200/90 p-8 shadow-card hover:shadow-card-hover transition-all duration-300 space-y-4">
+              <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
               </div>
-              <h3 className="text-lg font-black text-slate-900 uppercase">
-                Encaminhamento para Estágio
+              <h3 className="text-lg font-bold text-slate-900">
+                Encaminhamento para Estágio e Emprego
               </h3>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                Convênios ativos com mais de 45 indústrias e empresas regionais para contratação imediata de estudantes a partir do 2º semestre.
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Convênios diretos com mais de 45 indústrias e empresas regionais para contratação imediata de estudantes a partir do 2º semestre letivo.
               </p>
             </div>
           </div>
@@ -748,29 +861,28 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 6. NOTÍCIAS & COMUNICADOS OFICIAIS (#noticias) */}
+      {/* 6. NOTÍCIAS & COMUNICADOS OFICIAIS (#noticias)                */}
       {/* ============================================================ */}
-      <section id="noticias" className="py-16 sm:py-24 bg-[#f4f5f8] border-b-2 border-slate-300 scroll-mt-20">
+      <section id="noticias" className="py-20 sm:py-28 bg-slate-50 scroll-mt-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
-              <span className="bg-[#00a86b] text-white px-2.5 py-1 text-xs font-black uppercase tracking-wider mb-2 inline-block">
-                Comunicação Oficial
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-                NOTÍCIAS & COMUNICADOS DA DIREÇÃO
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+                Notícias & Comunicados Oficiais
               </h2>
-              <p className="text-slate-600 mt-1 max-w-2xl font-medium">
-                Avisos institucionais, editais de vestibulinho e conquistas dos nossos estudantes.
+              <p className="text-slate-600 mt-2 max-w-2xl text-sm sm:text-base leading-relaxed">
+                Fique informado sobre os editais do vestibulinho, atualizações nos laboratórios e conquistas acadêmicas dos alunos.
               </p>
             </div>
 
             <Link
               href="/login"
-              className="inline-flex items-center gap-2 bg-white border-2 border-[#0b2559] px-4 py-2 text-xs font-black uppercase tracking-wider text-slate-900 shadow-neo-sm hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
+              className="inline-flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 text-xs font-semibold rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors shadow-2xs"
             >
               <span>Painel de Publicação (Docentes)</span>
-              <span>→</span>
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </Link>
           </div>
 
@@ -778,29 +890,29 @@ export default function HomePage() {
             {mockNews.map((news) => (
               <article
                 key={news.id}
-                className="bg-white border-2 border-[#0b2559] p-6 shadow-neo flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform"
+                className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between text-xs mb-3 font-mono">
-                    <span className={`px-2 py-0.5 font-bold uppercase text-[10px] ${news.tagBg}`}>
+                  <div className="flex items-center justify-between text-xs mb-3">
+                    <span className={`px-2.5 py-0.5 rounded-full font-semibold text-[11px] ${news.badgeStyle}`}>
                       {news.tag}
                     </span>
-                    <span className="text-slate-500 font-bold">{news.date}</span>
+                    <span className="text-slate-400 text-xs">{news.date}</span>
                   </div>
 
-                  <h3 className="text-lg font-black text-slate-900 leading-snug">
+                  <h3 className="text-lg font-bold text-slate-900 leading-snug">
                     {news.title}
                   </h3>
 
-                  <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                     {news.summary}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-3 border-t border-slate-200 flex items-center justify-between text-xs font-mono">
-                  <span className="text-slate-500 font-bold">{news.author}</span>
-                  <span className="text-[#ff5500] font-black uppercase cursor-pointer hover:underline">
-                    Ler edital
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-slate-500 font-medium">{news.author}</span>
+                  <span className="text-blue-600 font-semibold cursor-pointer hover:underline">
+                    Ler comunicado
                   </span>
                 </div>
               </article>
@@ -810,36 +922,36 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
-      {/* 7. CONTATO & LOCALIZAÇÃO DO CAMPUS (#contato) */}
+      {/* 7. CONTATO & LOCALIZAÇÃO DO CAMPUS (#contato)                 */}
       {/* ============================================================ */}
-      <section id="contato" className="py-16 bg-white scroll-mt-20">
+      <section id="contato" className="py-16 sm:py-24 bg-white scroll-mt-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#0b2559] text-white border-4 border-slate-950 p-8 sm:p-12 shadow-neo-lg">
+          <div className="rounded-3xl bg-slate-900 text-white p-8 sm:p-12 shadow-elevated border border-slate-800">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8 space-y-4">
-                <span className="bg-[#ffe600] text-slate-950 font-black text-xs uppercase px-2.5 py-1">
-                  Atendimento e Secretaria Escolar
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-900/60 border border-blue-700/60 text-xs font-semibold text-blue-300">
+                  Secretaria Acadêmica & Visitas
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-black text-white">
-                  VENHA CONHECER NOSSOS LABORATÓRIOS E INSTALAÇÕES
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  Venha conhecer nossos laboratórios e instalações
                 </h2>
-                <p className="text-slate-200 text-sm max-w-2xl font-medium">
+                <p className="text-slate-300 text-sm max-w-2xl leading-relaxed">
                   Nossa secretaria acadêmica atende de segunda a sexta, das 08h às 21h30.
-                  Visitas guiadas para futuros alunos e escolas podem ser agendadas gratuitamente.
+                  Visitas guiadas para futuros alunos e escolas parceiras podem ser agendadas gratuitamente.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-xs font-mono">
-                  <div className="bg-[#07193b] p-3 border border-slate-700">
-                    <div className="font-bold text-[#ffe600]">ENDEREÇO</div>
-                    <div className="text-slate-300 mt-1">Av. Universitária, 1500 - Polo Tecnológico</div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-xs">
+                  <div className="rounded-xl bg-slate-800/80 p-4 border border-slate-700/80 space-y-1">
+                    <span className="text-slate-400 font-semibold block text-[11px] uppercase tracking-wider">Endereço</span>
+                    <span className="text-slate-200">Av. Universitária, 1500 - Polo Tecnológico</span>
                   </div>
-                  <div className="bg-[#07193b] p-3 border border-slate-700">
-                    <div className="font-bold text-[#ffe600]">TELEFONE</div>
-                    <div className="text-slate-300 mt-1">(15) 3251-4144 / 3251-4200</div>
+                  <div className="rounded-xl bg-slate-800/80 p-4 border border-slate-700/80 space-y-1">
+                    <span className="text-slate-400 font-semibold block text-[11px] uppercase tracking-wider">Telefone</span>
+                    <span className="text-slate-200">(15) 3251-4144 / 3251-4200</span>
                   </div>
-                  <div className="bg-[#07193b] p-3 border border-slate-700">
-                    <div className="font-bold text-[#ffe600]">E-MAIL</div>
-                    <div className="text-slate-300 mt-1">secretaria@sitech.edu.br</div>
+                  <div className="rounded-xl bg-slate-800/80 p-4 border border-slate-700/80 space-y-1">
+                    <span className="text-slate-400 font-semibold block text-[11px] uppercase tracking-wider">E-mail</span>
+                    <span className="text-slate-200">secretaria@sitech.edu.br</span>
                   </div>
                 </div>
               </div>
@@ -847,13 +959,13 @@ export default function HomePage() {
               <div className="lg:col-span-4 flex flex-col gap-3 justify-center">
                 <a
                   href="#cursos"
-                  className="w-full text-center bg-[#ff5500] hover:bg-[#e04a00] text-white py-3.5 text-xs font-black uppercase tracking-wider shadow-neo-sm hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
+                  className="w-full text-center bg-blue-600 hover:bg-blue-700 text-white py-3.5 text-sm font-semibold rounded-xl shadow-xs transition-colors"
                 >
                   Consultar Todos os Cursos
                 </a>
                 <Link
                   href="/login"
-                  className="w-full text-center bg-white hover:bg-slate-100 text-[#0b2559] py-3.5 text-xs font-black uppercase tracking-wider shadow-neo-sm transition-all"
+                  className="w-full text-center bg-slate-800 hover:bg-slate-700 text-slate-200 py-3.5 text-sm font-semibold rounded-xl border border-slate-700 transition-colors"
                 >
                   Portal Administrativo
                 </Link>
