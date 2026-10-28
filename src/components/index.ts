@@ -1,6 +1,6 @@
 /**
- * Ponto de exportação dos componentes de interface
+ * Ponto de exportação centralizado dos componentes de interface da Sitech
  */
 
-// Os componentes Header, Footer e seções serão adicionados no Grupo 3
-export {};
+export { Header } from "./Header";
+export { Footer } from "./Footer";
