@@ -10,10 +10,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Cursos Técnicos", href: "#cursos", tag: "9 Opções" },
-  { label: "Diferenciais", href: "#diferenciais" },
-  { label: "Notícias", href: "#noticias" },
-  { label: "Contato & Local", href: "#contato" },
+  { label: "Cursos & Matrizes", href: "#cursos", tag: "9 Cursos" },
+  { label: "Oficinas & Laboratórios", href: "#diferenciais" },
+  { label: "Editais & Notícias", href: "#noticias" },
+  { label: "Secretaria & Local", href: "#contato" },
 ];
 
 export function Header() {
@@ -22,11 +22,7 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 15);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -37,32 +33,39 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs py-3"
-          : "bg-white/80 backdrop-blur-sm border-b border-slate-200/50 py-4"
+          ? "bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm py-2.5"
+          : "bg-white/90 backdrop-blur-sm border-b border-slate-200/60 py-3.5"
       }`}
-      aria-label="Navegação Principal"
+      aria-label="Navegação Principal da Escola"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logotipo Sitech */}
+          {/* Logotipo e Identidade da Escola */}
           <Link
             href="/"
-            className="flex items-center gap-3 group focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg"
+            className="flex items-center gap-3 group focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white font-bold text-lg shadow-sm group-hover:bg-blue-700 group-hover:scale-105 transition-all duration-200">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M12 14l9-5-9-5-9 5 9 5z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white font-bold transition-all duration-200 group-hover:bg-blue-700 shadow-sm">
+              {/* Ícone Arquitetural / Compasso e Prancheta */}
+              <svg className="w-5 h-5 text-blue-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
+              <div className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-amber-500 border-2 border-white" />
             </div>
+
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
-                SITECH
-              </span>
-              <span className="text-[10px] font-semibold tracking-wider text-blue-600 uppercase">
-                Escola Técnica
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-700 transition-colors">
+                  SITECH
+                </span>
+                <span className="hidden sm:inline-flex px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                  Pública
+                </span>
+              </div>
+              <span className="text-xs font-medium text-slate-500">
+                Escola Técnica Estadual
               </span>
             </div>
           </Link>
@@ -73,11 +76,11 @@ export function Header() {
               <a
                 key={item.label}
                 href={item.href}
-                className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 rounded-xl transition-all duration-200"
+                className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 rounded-xl transition-all duration-150"
               >
                 <span>{item.label}</span>
                 {item.tag && (
-                  <span className="rounded-full bg-blue-50 text-blue-700 px-2 py-0.5 text-xs font-semibold">
+                  <span className="rounded-md bg-blue-50 text-blue-700 px-2 py-0.5 text-xs font-semibold border border-blue-100">
                     {item.tag}
                   </span>
                 )}
@@ -86,20 +89,21 @@ export function Header() {
           </nav>
 
           {/* Ações Direitas (Área Restrita + CTA) */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2.5">
             <Link
               href="/login"
-              className="px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 rounded-xl transition-all duration-200"
+              className="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors"
             >
               Área Restrita
             </Link>
+
             <a
               href="#cursos"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm font-semibold rounded-xl shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-xs font-semibold rounded-xl shadow-sm hover:shadow transition-all duration-150 active:scale-[0.98]"
             >
-              <span>Matrículas 2026</span>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              <span>Grade dos Cursos</span>
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
               </svg>
             </a>
           </div>
@@ -129,18 +133,18 @@ export function Header() {
 
       {/* Gaveta Mobile */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 space-y-3 shadow-lg">
+        <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 space-y-3 shadow-lg animate-fade-in">
           <div className="space-y-1">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2.5 px-3 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50/50 rounded-xl transition-colors"
+                className="flex items-center justify-between py-2.5 px-3 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50/60 rounded-xl transition-colors"
               >
                 <span>{item.label}</span>
                 {item.tag && (
-                  <span className="rounded-full bg-blue-50 text-blue-700 px-2 py-0.5 text-xs font-semibold">
+                  <span className="rounded bg-blue-50 text-blue-700 px-2 py-0.5 text-xs font-semibold">
                     {item.tag}
                   </span>
                 )}
@@ -148,26 +152,24 @@ export function Header() {
             ))}
           </div>
 
-          <div className="pt-2 flex flex-col gap-2">
-            <Link
-              href="/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full text-center py-2.5 text-sm font-medium text-slate-700 hover:text-slate-900 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
-            >
-              Área Administrativa
-            </Link>
+          <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
             <a
               href="#cursos"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full text-center bg-blue-600 hover:bg-blue-700 py-2.5 text-sm font-semibold text-white rounded-xl shadow-xs transition-colors"
+              className="w-full text-center bg-blue-600 text-white py-2.5 px-4 text-xs font-semibold rounded-xl"
             >
-              Ver Todos os Cursos Técnicos
+              Consultar Matrizes Curriculares
             </a>
+            <Link
+              href="/login"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full text-center bg-slate-100 text-slate-700 py-2.5 px-4 text-xs font-semibold rounded-xl"
+            >
+              Área Restrita (Docentes)
+            </Link>
           </div>
         </div>
       )}
     </header>
   );
 }
-
-export default Header;

@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-16 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="w-full max-w-md space-y-6 rounded-2xl border border-slate-200/90 bg-white p-8 sm:p-10 shadow-card">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-16 sm:px-6 lg:px-8 bg-slate-50 bg-blueprint-grid">
+      <div className="w-full max-w-md space-y-6 rounded-2xl border border-slate-200 bg-white p-8 sm:p-10 shadow-tactile animate-fade-in">
         <div className="text-center space-y-2">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-blue-400 shadow-sm">
             <svg
               className="h-6 w-6"
               fill="none"
@@ -27,26 +27,26 @@ export default function LoginPage() {
             Acesso Administrativo
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xs mx-auto">
-            Área restrita à coordenação e docentes para publicação de comunicados e notícias oficiais.
+            Área restrita à coordenação e docentes para publicação de comunicados e editais.
           </p>
         </div>
 
         <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              E-mail Institucional
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              E-mail institucional
             </label>
             <input
               type="email"
-              placeholder="admin@sitech.edu.br"
+              placeholder="docente@sitech.edu.br"
               disabled
               className="block w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-500 shadow-2xs cursor-not-allowed"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              Senha de Acesso
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              Senha de acesso
             </label>
             <input
               type="password"

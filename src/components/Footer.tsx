@@ -15,7 +15,7 @@ export function Footer() {
               </svg>
             </div>
             <div>
-              <p className="text-xs font-semibold text-blue-400 uppercase tracking-wider">
+              <p className="text-xs font-semibold text-blue-400">
                 Vestibulinho 2026 • 1º Semestre Letivo
               </p>
               <p className="text-sm font-medium text-slate-200">
@@ -29,7 +29,7 @@ export function Footer() {
               href="#cursos"
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-xs font-semibold rounded-xl shadow-xs transition-colors"
             >
-              Consultar Matrizes
+              Consultar Matrizes Curriculares
             </a>
           </div>
         </div>
@@ -46,8 +46,8 @@ export function Footer() {
               </div>
               <div>
                 <span className="text-lg font-bold text-white tracking-tight">SITECH</span>
-                <span className="text-[10px] font-semibold text-blue-400 block uppercase tracking-wider">
-                  Escola Técnica
+                <span className="text-xs font-medium text-slate-400 block">
+                  Escola Técnica Estadual
                 </span>
               </div>
             </div>
@@ -64,7 +64,7 @@ export function Footer() {
 
           {/* Coluna 2: Cursos Técnicos */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">
+            <h4 className="text-xs font-bold text-slate-200 mb-4">
               Cursos Técnicos (Noturno)
             </h4>
             <ul className="space-y-2 text-xs text-slate-400">
@@ -95,7 +95,7 @@ export function Footer() {
               </li>
               <li>
                 <a href="#cursos" className="hover:text-blue-400 transition-colors">
-                  Administração & Logística
+                  Administração & Gestão
                 </a>
               </li>
             </ul>
@@ -103,7 +103,7 @@ export function Footer() {
 
           {/* Coluna 3: Institucional */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">
+            <h4 className="text-xs font-bold text-slate-200 mb-4">
               Navegação Rápida
             </h4>
             <ul className="space-y-2 text-xs text-slate-400">
@@ -114,7 +114,7 @@ export function Footer() {
               </li>
               <li>
                 <a href="#diferenciais" className="hover:text-blue-400 transition-colors">
-                  Laboratórios & Infraestrutura
+                  Oficinas & Laboratórios
                 </a>
               </li>
               <li>
@@ -124,7 +124,7 @@ export function Footer() {
               </li>
               <li>
                 <a href="#contato" className="hover:text-blue-400 transition-colors">
-                  Localização & Contato
+                  Localização & Secretaria
                 </a>
               </li>
               <li>
@@ -137,21 +137,21 @@ export function Footer() {
 
           {/* Coluna 4: Atendimento & Secretaria */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">
+            <h4 className="text-xs font-bold text-slate-200 mb-4">
               Secretaria Acadêmica
             </h4>
             <div className="space-y-3 text-xs text-slate-400">
               <div>
-                <span className="text-slate-500 block text-[11px] font-semibold uppercase tracking-wider">Endereço</span>
+                <span className="text-slate-500 block text-xs font-medium">Endereço</span>
                 <span className="text-slate-300">Av. Universitária, 1500 - Polo Tecnológico</span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[11px] font-semibold uppercase tracking-wider">Telefones</span>
+                <span className="text-slate-500 block text-xs font-medium">Telefones</span>
                 <span className="text-slate-300">(15) 3251-4144 / (15) 3251-4200</span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[11px] font-semibold uppercase tracking-wider">Atendimento</span>
-                <span className="text-slate-300">Segunda a Sexta, das 08h às 21h30</span>
+                <span className="text-slate-500 block text-xs font-medium">Atendimento</span>
+                <span className="text-slate-300">Segunda a Sexta, das 08h00 às 21h30</span>
               </div>
             </div>
           </div>
@@ -161,9 +161,9 @@ export function Footer() {
       {/* Faixa Inferior de Direitos Autorais */}
       <div className="bg-slate-950 border-t border-slate-800/80 py-4">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-          <p>© {currentYear} Sitech - Escola Técnica Institucional. Todos os direitos reservados.</p>
+          <p>© {currentYear} Sitech - Escola Técnica Estadual. Todos os direitos reservados.</p>
           <p>
-            Matrizes curriculares de referência inspiradas no ensino técnico da ETEC Sales Gomes.
+            Matrizes curriculares com base técnica referenciada no modelo da ETEC Sales Gomes.
           </p>
         </div>
       </div>

@@ -48,6 +48,8 @@ next-env.d.ts
 # Agent tooling & local config
 .gemini/
 .agent/
+.agents/
+skills-lock.json
 .impeccable/config.local.json
 .impeccable/live/sessions/
 .impeccable/mocks/
