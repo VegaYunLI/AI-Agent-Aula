@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-28T11:50:35-03:00",
+  "title": "Design System: Sitech",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Cobalto Politécnico",
+        "canonical": "#1e40af",
+        "tonalRamp": ["#eff6ff", "#dbeafe", "#bfdbfe", "#3b82f6", "#2563eb", "#1d4ed8", "#1e40af", "#1e3a8a"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Slate Calmo",
+        "canonical": "#f8fafc",
+        "tonalRamp": ["#ffffff", "#f8fafc", "#f1f5f9", "#e2e8f0", "#cbd5e1", "#94a3b8", "#475569", "#0f172a"]
+      },
+      "accent-tech": {
+        "role": "secondary",
+        "displayName": "Azul Software",
+        "canonical": "#2563eb",
+        "tonalRamp": ["#eff6ff", "#bfdbfe", "#2563eb", "#1d4ed8"]
+      },
+      "accent-industry": {
+        "role": "tertiary",
+        "displayName": "Âmbar Automação",
+        "canonical": "#ea580c",
+        "tonalRamp": ["#fff7ed", "#fed7aa", "#ea580c", "#c2410c"]
+      },
+      "accent-health": {
+        "role": "tertiary",
+        "displayName": "Esmeralda Farmácia",
+        "canonical": "#059669",
+        "tonalRamp": ["#ecfdf5", "#a7f3d0", "#059669", "#047857"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Hero",
+        "purpose": "Chamada principal da página inicial com peso extra bold."
+      },
+      "headline": {
+        "displayName": "Headline de Seção",
+        "purpose": "Aberturas temáticas para catálogo, diferenciais e notícias."
+      },
+      "title": {
+        "displayName": "Título de Cartão",
+        "purpose": "Nomes oficiais de cursos técnicos e artigos."
+      },
+      "body": {
+        "displayName": "Corpo & Sinopse",
+        "purpose": "Textos explicativos com máxima legibilidade e entrelinha relaxada."
+      },
+      "label": {
+        "displayName": "Rótulo & Pílula",
+        "purpose": "Indicadores de semestres, cargas horárias e tags."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-base",
+        "value": "0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 6px 16px -2px rgba(15, 23, 42, 0.05)",
+        "purpose": "Sombra suave de repouso em cartões e blocos informativos."
+      },
+      {
+        "name": "card-hover",
+        "value": "0 12px 28px -6px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03)",
+        "purpose": "Elevação responsiva em cartões interativos ao passar o cursor."
+      },
+      {
+        "name": "elevated-modal",
+        "value": "0 20px 40px -12px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.04)",
+        "purpose": "Camada superior de foco e diálogo da matriz curricular."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-standard",
+        "value": "cubic-bezier(0, 0, 0.2, 1)",
+        "purpose": "Transição suave de elevação e mudança de cor em 200ms a 300ms."
+      },
+      {
+        "name": "ticker-linear",
+        "value": "linear",
+        "purpose": "Rolagem contínua do marquee informativo com pausa no hover."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Botão principal de chamada para matrículas e ações de alto impacto.",
+      "html": "<button class=\"ds-btn-primary\">Explorar Cursos Técnicos</button>",
+      "css": ".ds-btn-primary { background-color: #2563eb; color: #ffffff; padding: 12px 24px; font-size: 14px; font-weight: 600; border-radius: 12px; border: none; cursor: pointer; transition: all 0.2s cubic-bezier(0, 0, 0.2, 1); box-shadow: 0 1px 2px rgba(0,0,0,0.05); } .ds-btn-primary:hover { background-color: #1d4ed8; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); } .ds-btn-primary:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }"
+    },
+    {
+      "name": "Category Filter Pill",
+      "kind": "chip",
+      "refersTo": "chip-category",
+      "description": "Filtro por eixo formativo para busca no catálogo de cursos.",
+      "html": "<button class=\"ds-chip ds-chip-active\">Tecnologia & Software (1)</button>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 12px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid #e2e8f0; background: #ffffff; color: #475569; transition: all 0.2s ease; } .ds-chip:hover { background: #f1f5f9; color: #0f172a; } .ds-chip-active { background: #0f172a; color: #ffffff; border-color: #0f172a; }"
+    },
+    {
+      "name": "Course Card",
+      "kind": "card",
+      "refersTo": "card-course",
+      "description": "Cartão representativo de curso com badge de eixo, título, sinopse e ação.",
+      "html": "<div class=\"ds-card-course\"><span class=\"ds-badge-ti\">Tecnologia & Software</span><h3 class=\"ds-card-title\">Desenvolvimento de Sistemas</h3><p class=\"ds-card-desc\">Formação completa para programadores com projetos reais.</p><button class=\"ds-btn-matrix\">Ver Matriz Curricular</button></div>",
+      "css": ".ds-card-course { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 6px 16px -2px rgba(15,23,42,0.05); transition: all 0.3s ease; } .ds-card-course:hover { transform: translateY(-4px); box-shadow: 0 12px 28px -6px rgba(15,23,42,0.08); } .ds-badge-ti { display: inline-block; padding: 4px 10px; border-radius: 9999px; background: #eff6ff; color: #1d4ed8; font-size: 12px; font-weight: 600; margin-bottom: 12px; } .ds-card-title { font-size: 20px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0; } .ds-card-desc { font-size: 14px; color: #475569; line-height: 1.6; margin: 0 0 16px 0; } .ds-btn-matrix { width: 100%; padding: 10px; background: #0f172a; color: #ffffff; border: none; border-radius: 12px; font-weight: 600; font-size: 12px; cursor: pointer; transition: background 0.2s ease; } .ds-btn-matrix:hover { background: #2563eb; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Estúdio Técnico Contemporâneo (Caderno de Laboratório & Prática Aplicada)",
+    "overview": "O sistema visual do Sitech constrói uma experiência institucional transparente, acolhedora e de alta precisão técnica. Substitui blocos neo-brutalistas e cores berrantes por uma espacialidade nítida, paleta equilibrada com ancoragem em azul cobalto/ardósia e acentos funcionais que diferenciam os eixos formativos.",
+    "keyCharacteristics": [
+      "Clareza arquitetural de 1px sem contornos pretos pesados",
+      "Diferenciação funcional por eixo formativo em pílulas informativas",
+      "Profundidade física suave com sombras multicamada",
+      "Tipografia expressiva com títulos Lexend e corpo Figtree"
+    ],
+    "rules": [
+      {
+        "name": "A Regra da Raridade Cromática",
+        "body": "As cores de destaque de cada eixo pertencem às suas respectivas pílulas e marcadores. O fundo e os blocos estruturais permanecem em neutros claros ou ardósia profundo.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra do Peso Direto",
+        "body": "Títulos transmitem autoridade por sua escala e espessura tipográfica (800 / 700), dispensando o uso de kickers decorativos ou gradientes.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra da Elevação Fluida",
+        "body": "As superfícies flutuam suavemente na interação com elevação física sutil e sombras difusas.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do manter contraste mínimo de 4.5:1 para todo o texto corrido e 7:1 em títulos institucionais.",
+      "Do usar sombras suaves em camadas com blur amplo para indicar elevação física.",
+      "Do preservar a associação semântica de cores por eixo formativo (TI em azul, Indústria em âmbar, Saúde em esmeralda, Gestão em ciano)."
+    ],
+    "donts": [
+      "Don't utilizar kickers ou subtags decorativas acima dos títulos das seções.",
+      "Don't aplicar bordas pretas espessas de 4px ou sombras sólidas de bloco (neo-brutalistas).",
+      "Don't usar texto em gradiente multicolorido.",
+      "Don't utilizar emojis como substitutos de ícones na interface."
+    ]
+  }
+}

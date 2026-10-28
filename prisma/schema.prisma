@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  news      News[]
+}
+
+model News {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  summary     String
+  content     String
+  imageUrl    String?
+  published   Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  authorId    String?
+  author      User?    @relation(fields: [authorId], references: [id])
+}
+
+model Course {
+  id                String    @id @default(uuid())
+  title             String
+  slug              String    @unique
+  description       String
+  durationSemesters Int       @default(3)
+  period            String    @default("Noturno")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  subjects          Subject[]
+}
+
+model Subject {
+  id          String   @id @default(uuid())
+  name        String
+  workload    Int
+  description String?
+  semester    Int      @default(1)
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
