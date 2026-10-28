@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@theme {
+  --color-sitech-primary: #0f3b6c;
+  --color-sitech-primary-light: #1d5899;
+  --color-sitech-primary-dark: #0a2544;
+  --color-sitech-secondary: #0284c7;
+  --color-sitech-secondary-light: #38bdf8;
+  --color-sitech-secondary-dark: #0369a1;
+  --color-sitech-accent: #ea580c;
+  --color-sitech-accent-light: #fb923c;
+  --color-sitech-accent-dark: #c2410c;
+  --color-sitech-neutral-50: #f8fafc;
+  --color-sitech-neutral-100: #f1f5f9;
+  --color-sitech-neutral-200: #e2e8f0;
+  --color-sitech-neutral-700: #334155;
+  --color-sitech-neutral-800: #1e293b;
+  --color-sitech-neutral-900: #0f172a;
+  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+  --font-inter: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-inter);
+  color: #0f172a;
+  background-color: #f8fafc;
+}
